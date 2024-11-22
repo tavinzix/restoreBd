@@ -17,6 +17,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Reduzida extends javax.swing.JFrame {
 
+    int flag = 0;
+    boolean tempoFlag = false;
+
     public Reduzida() {
         initComponents();
         this.setLocationRelativeTo(null); //iniciar no centro
@@ -24,6 +27,7 @@ public class Reduzida extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Quando fechar a janela, parar de executar o codigo
         this.setVisible(true); //deixar visivel
         this.setTitle("Restaura BD");
+        tempo.setText("00:00:00");
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +54,8 @@ public class Reduzida extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         retirar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        tempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,6 +149,10 @@ public class Reduzida extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Tempo de restauração:");
+
+        tempo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,7 +160,7 @@ public class Reduzida extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
+                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,8 +168,8 @@ public class Reduzida extends javax.swing.JFrame {
                                     .addComponent(jLabel2))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(backup, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                    .addComponent(pgrestore))
+                                    .addComponent(backup)
+                                    .addComponent(pgrestore, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(selecionapg, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,60 +192,71 @@ public class Reduzida extends javax.swing.JFrame {
                                         .addComponent(psql, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(selecionapsql, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(restaurar)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(cancelar))))))
+                                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(157, 157, 157)
+                                .addComponent(retirar, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(201, 201, 201)
-                        .addComponent(retirar, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                        .addGap(147, 147, 147)
+                        .addComponent(restaurar)
+                        .addGap(34, 34, 34)
+                        .addComponent(cancelar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tempo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(197, 197, 197))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(selecionabkp)
-                            .addComponent(backup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(pgrestore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(selecionapg))
-                        .addGap(18, 18, 18)
-                        .addComponent(retirar)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(base, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(psql, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(selecionapsql))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(restaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tempo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(selecionabkp)
+                    .addComponent(backup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(pgrestore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selecionapg))
+                .addGap(18, 18, 18)
+                .addComponent(retirar)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(base, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(psql, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selecionapsql))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(restaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -396,7 +417,7 @@ public class Reduzida extends javax.swing.JFrame {
 
     public void Restaurar() throws IOException {
         if (ip.getText().matches("") || base.getText().matches("") || backup.getText().matches("")
-                || pgrestore.getText().matches("") || psql.getText().matches("") || senha.getText().matches("")) {
+                || pgrestore.getText().matches("") || senha.getText().matches("")) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
         } else {
             String caminhoPgRestore = pgrestore.getText().trim();
@@ -448,8 +469,9 @@ public class Reduzida extends javax.swing.JFrame {
 
             try {
                 Process create = processoCreate.start();
-                Thread.sleep(5000);
+                Thread.sleep(10000);
                 Process process = processoRestore.start();
+                Timer timer = new Timer();
 
                 BufferedReader readerRestore = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 BufferedReader readerCreate = new BufferedReader(new InputStreamReader(create.getInputStream()));
@@ -461,33 +483,54 @@ public class Reduzida extends javax.swing.JFrame {
                     try {
                         String lineCreate;
                         String lineRestore;
-                        String lineRestore2 = null;
+                        String lineRestore2 = "";
                         restaurar.setEnabled(false);
                         retirar.setEnabled(false);
+                        flag = 1;
+                        tempoFlag = true;
+
                         while ((lineCreate = errorReaderCreate.readLine()) != null) {
                             resultado.setText(lineCreate);
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
                         }
 
                         while ((lineRestore = errorReaderRestore.readLine()) != null) {
-
                             lineRestore2 += lineRestore + "\n";
                             resultado.setText(lineRestore2);
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
+                            //System.out.println("RESTORE erro" + flag);
                         }
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        flag = 0;
+                        tempoFlag = false;
+                        restaurar.setEnabled(true);
+                        retirar.setEnabled(true);
                     }
-                    restaurar.setEnabled(true);
-                    retirar.setEnabled(true);
+                }).start();
+
+                new Thread(() -> {
+                    while (tempoFlag) {
+                        tempo.setText(timer.toString(true));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }).start();
 
                 new Thread(() -> {
                     try {
                         String lineCreate;
                         String lineRestore;
-                        String lineRestore2 = null;
+                        String lineRestore2 = "";
                         restaurar.setEnabled(false);
                         retirar.setEnabled(false);
+                        flag = 1;
+                        tempoFlag = true;
+
                         while ((lineCreate = readerCreate.readLine()) != null) {
                             resultado.setText(lineCreate);
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
@@ -497,21 +540,25 @@ public class Reduzida extends javax.swing.JFrame {
                             lineRestore2 += lineRestore + "\n";
                             resultado.setText(lineRestore2);
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
+                            System.out.println("RESTORE ok" + flag);
                         }
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        flag = 0;
+                        tempoFlag = false;
+                        restaurar.setEnabled(true);
+                        retirar.setEnabled(true);
                     }
-                    restaurar.setEnabled(true);
-                    retirar.setEnabled(true);
                 }).start();
 
             } catch (IOException | InterruptedException ex) {
-                Logger.getLogger(Reduzida.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Completa.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
     public void RetirarTabela() throws IOException {
-
         if (backup.getText().matches("") || pgrestore.getText().matches("")) {
             JOptionPane.showMessageDialog(null, "Preencha o backup e o pg_restore");
         } else {
@@ -552,15 +599,11 @@ public class Reduzida extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void Cancelar(){
+
+    public void Cancelar() {
         System.exit(0);
     }
-    
-    
-    
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField backup;
@@ -573,6 +616,7 @@ public class Reduzida extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField pgrestore;
     private javax.swing.JTextField psql;
@@ -583,5 +627,6 @@ public class Reduzida extends javax.swing.JFrame {
     private javax.swing.JToggleButton selecionapg;
     private javax.swing.JToggleButton selecionapsql;
     private javax.swing.JPasswordField senha;
+    private javax.swing.JLabel tempo;
     // End of variables declaration//GEN-END:variables
 }

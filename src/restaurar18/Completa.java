@@ -17,14 +17,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Completa extends javax.swing.JFrame {
 
+    int flag = 0;
+    boolean tempoFlag = false;
+
     public Completa() {
         initComponents();
         this.setLocationRelativeTo(null); //iniciar no centro
         this.setResizable(false);//tamanho fixo
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Quando fechar a janela, parar de executar o cÃ³digo
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Quando fechar a janela, parar de executar o codigo
         this.setVisible(true); //deixar visivel
         this.setTitle("Restaura BD");
         ip.requestFocus();
+        tempo.setText("00:00:00");
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +54,8 @@ public class Completa extends javax.swing.JFrame {
         resultado = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         cancelar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        tempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +142,10 @@ public class Completa extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Tempo de restauração:");
+
+        tempo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,7 +153,7 @@ public class Completa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
@@ -181,13 +191,20 @@ public class Completa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tempo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -217,11 +234,12 @@ public class Completa extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(restaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
-                .addGap(12, 12, 12))
+                            .addComponent(restaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -297,14 +315,13 @@ public class Completa extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Completa().setVisible(true);
             }
         });
     }
-    
+
     public File selecionaBackup() {
         JFileChooser chooser = new JFileChooser();
         UIManager.put("FileChooser.openDialogTitleText", "Seleçao de aquivos");
@@ -373,8 +390,8 @@ public class Completa extends javax.swing.JFrame {
     }
 
     public void Restaurar() throws IOException {
-        if (ip.getText().matches("") || base.getText().matches("") || backup.getText().matches("")
-                || pgrestore.getText().matches("") || psql.getText().matches("") || senha.getText().matches("")) {
+        if (ip.getText().isEmpty() || base.getText().isEmpty() || backup.getText().isEmpty()
+                || pgrestore.getText().isEmpty() || senha.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
         } else {
             String caminhoPgRestore = pgrestore.getText().trim();
@@ -398,7 +415,7 @@ public class Completa extends javax.swing.JFrame {
             comandoRestore.add("--dbname");
             comandoRestore.add(base.getText().trim());
             comandoRestore.add("--verbose");
-            comandoRestore.add(backup.getText().trim());
+            comandoRestore.add("\"" + backup.getText().trim() + "\"");
 
             String senhaT = this.senha.getText().trim();
 
@@ -409,8 +426,7 @@ public class Completa extends javax.swing.JFrame {
             comandoCreate.add("--username");
             comandoCreate.add("postgres");
             comandoCreate.add("-c");
-            comandoCreate.add("\"create database");
-            comandoCreate.add(base.getText().trim() + "\"");
+            comandoCreate.add("\"create database " + base.getText().trim() + "\"");
 
             System.out.println("Executando comando create: " + String.join(" ", comandoCreate));
             System.out.println("Executando comando restore: " + String.join(" ", comandoRestore));
@@ -423,8 +439,9 @@ public class Completa extends javax.swing.JFrame {
 
             try {
                 Process create = processoCreate.start();
-                Thread.sleep(5000);
+                create.waitFor();
                 Process process = processoRestore.start();
+                Timer timer = new Timer();
 
                 BufferedReader readerRestore = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 BufferedReader readerCreate = new BufferedReader(new InputStreamReader(create.getInputStream()));
@@ -436,8 +453,10 @@ public class Completa extends javax.swing.JFrame {
                     try {
                         String lineCreate;
                         String lineRestore;
-                        String lineRestore2 = null;
+                        String lineRestore2 = "";
                         restaurar.setEnabled(false);
+                        flag = 1;
+                        tempoFlag = true;
                         while ((lineCreate = errorReaderCreate.readLine()) != null) {
                             resultado.setText(lineCreate);
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
@@ -449,16 +468,32 @@ public class Completa extends javax.swing.JFrame {
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
                         }
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        flag = 0;
+                        tempoFlag = false;
+                        restaurar.setEnabled(true);
                     }
-                    restaurar.setEnabled(true);
+                }).start();
+
+                new Thread(() -> {
+                    while (tempoFlag) {
+                        tempo.setText(timer.toString(true));
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }).start();
 
                 new Thread(() -> {
                     try {
                         String lineCreate;
                         String lineRestore;
-                        String lineRestore2 = null;
+                        String lineRestore2 = "";
                         restaurar.setEnabled(false);
+
                         while ((lineCreate = readerCreate.readLine()) != null) {
                             resultado.setText(lineCreate);
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
@@ -470,8 +505,10 @@ public class Completa extends javax.swing.JFrame {
                             this.resultado.setCaretPosition(this.resultado.getDocument().getLength());
                         }
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        restaurar.setEnabled(true);
                     }
-                    restaurar.setEnabled(true);
                 }).start();
 
             } catch (IOException | InterruptedException ex) {
@@ -479,7 +516,7 @@ public class Completa extends javax.swing.JFrame {
             }
         }
     }
-       
+
     public void Cancelar() {
         System.exit(0);
     }
@@ -495,6 +532,7 @@ public class Completa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField pgrestore;
     private javax.swing.JTextField psql;
@@ -504,5 +542,6 @@ public class Completa extends javax.swing.JFrame {
     private javax.swing.JToggleButton selecionapg;
     private javax.swing.JToggleButton selecionapsql;
     private javax.swing.JPasswordField senha;
+    private javax.swing.JLabel tempo;
     // End of variables declaration//GEN-END:variables
 }

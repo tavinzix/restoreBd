@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Retirar extends JFrame {
+
     public Retirar(String pg_restore) {
         File file = new File(pg_restore);
         String caminhoDaPasta = file.getParent();
@@ -19,17 +21,25 @@ public class Retirar extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setIcon();
-     
+
+        JPanel hintPanel = new JPanel();
+        add(hintPanel);
+        JButton sugestao = new JButton("Tabelas sugeridas");
+        hintPanel.setSize(150, 50);
+        hintPanel.setLocation(200, 20);
+        sugestao.setFont(new Font("Tahoma", Font.BOLD, 12));
+        hintPanel.add(sugestao);
+
         JPanel tabelas = new JPanel();
         tabelas.setLayout(new BorderLayout());
         JLabel label1 = new JLabel("Tabelas");
-        label1.setBorder(BorderFactory.createEmptyBorder(20, 75, 10, 10));
+        label1.setBorder(BorderFactory.createEmptyBorder(50, 75, 10, 10));
         tabelas.add(label1, BorderLayout.NORTH);
 
         JPanel tabelasExcluidas = new JPanel();
         tabelasExcluidas.setLayout(new BorderLayout());
         JLabel label2 = new JLabel("Tabelas Excluídas");
-        label2.setBorder(BorderFactory.createEmptyBorder(20, 75, 10, 10));
+        label2.setBorder(BorderFactory.createEmptyBorder(50, 75, 10, 10));
         tabelasExcluidas.add(label2, BorderLayout.NORTH);
 
         DefaultListModel<String> listaTabelas = new DefaultListModel<>();
@@ -51,39 +61,78 @@ public class Retirar extends JFrame {
         mainPanel.add(tabelas);
         mainPanel.add(buttonPanel);
         mainPanel.add(tabelasExcluidas);
-
         add(mainPanel, BorderLayout.CENTER);
 
         JPanel savePanel = new JPanel();
         add(savePanel, BorderLayout.SOUTH);
         savePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 70));
 
-        JButton adicionar = new JButton("->");
-        adicionar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        java.util.List<String> tabelasList = new ArrayList<>();
+        tabelasList.add("auditoria");
+        tabelasList.add("cartaorec");
+        tabelasList.add("ctapagar");
+        tabelasList.add("ctapagas");
+        tabelasList.add("ctareceber");
+        tabelasList.add("inventario");
+        tabelasList.add("logtransacao");
+        tabelasList.add("mde");
+        tabelasList.add("mdeevento");
+        tabelasList.add("mdelog");
+        tabelasList.add("nfeevento");
+        tabelasList.add("nfecontingencia");
+        tabelasList.add("nfelog");
+        tabelasList.add("notaeletronica");
+        tabelasList.add("notaeletronicaarquivo");
+        tabelasList.add("produtoempresahistorico");
+        tabelasList.add("produtoimagem");
 
-        adicionar.addActionListener((ActionEvent e) -> {
-            for (String selectedValue : list1.getSelectedValuesList()) {
-                listaTabelasExcluidas.addElement(selectedValue);
-                listaTabelas.removeElement(selectedValue);
-                System.out.println(selectedValue);
+        sugestao.addActionListener((ActionEvent e) -> {
+            for (String tabela : tabelasList) {
+                listaTabelasExcluidas.addElement(tabela);
             }
+
+            for (int i = 0; i < listaTabelasExcluidas.getSize(); i++) {
+                String removida = listaTabelasExcluidas.get(i);
+
+                for (int j = 0; j < listaTabelas.getSize(); j++) {
+                    String remover = listaTabelas.get(j);
+                    if (remover.contains(removida)) {
+                        listaTabelas.removeElement(remover);
+                    }
+                }
+            }
+            list1.revalidate();
+            list1.repaint();
         });
+
+        JButton adicionar = new JButton("->");
+
+        adicionar.setFont(
+                new Font("Tahoma", Font.BOLD, 16));
+        adicionar.addActionListener(
+                (ActionEvent e) -> {
+                    for (String selectedValue : list1.getSelectedValuesList()) {
+                        listaTabelasExcluidas.addElement(selectedValue);
+                        listaTabelas.removeElement(selectedValue);
+                        System.out.println(selectedValue);
+                    }
+                }
+        );
 
         JButton voltar = new JButton("<-");
-        voltar.setFont(new Font("Tahoma", Font.BOLD, 16));
 
+        voltar.setFont(new Font("Tahoma", Font.BOLD, 16));
         voltar.addActionListener((ActionEvent e) -> {
             for (String selectedValue : list2.getSelectedValuesList()) {
-
                 listaTabelas.addElement(selectedValue);
                 listaTabelasExcluidas.removeElement(selectedValue);
-
                 System.out.println(selectedValue);
-                System.out.println(caminhoDaPasta);
             }
-        });
+        }
+        );
 
         JButton salvar = new JButton("Salvar");
+
         salvar.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         salvar.addActionListener((ActionEvent e) -> {
@@ -136,22 +185,20 @@ public class Retirar extends JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Retirar.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
-        });
+        }
+        );
 
         buttonPanel.add(adicionar);
         buttonPanel.add(voltar);
         savePanel.add(salvar);
         carregarDadosDoArquivo(listaTabelas, caminhoDaPasta);
-
     }
 
     private void carregarDadosDoArquivo(DefaultListModel<String> listaTabelas, String caminhoDaPasta) {
         File arquivo = new File(caminhoDaPasta, "temp.list");
 
         try ( BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-
             String line;
             listaTabelas.clear();
 
@@ -174,9 +221,8 @@ public class Retirar extends JFrame {
     public static void main(String[] args) {
 
     }
-    
+
     public void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("ico.png")));
     }
-    
 }
